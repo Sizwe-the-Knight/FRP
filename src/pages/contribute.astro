@@ -1,0 +1,15 @@
+---
+import EditorialLayout from '../layouts/EditorialLayout.astro';
+import { community } from '../config/community';
+---
+<EditorialLayout title="From the Underground / Get Featured" description="Suggest an independent project or a correction for FRP's human editorial review.">
+  <header class="magazine-heading"><span class="frp-eyebrow">GOOD FINDS TRAVEL BY WORD OF MOUTH.</span><h1>From the <em>Underground.</em></h1><p>Built something useful? Found something a friend should understand? Put it on our radar.</p></header>
+  <div class="article-reading"><h2>Get featured. Help us get it right.</h2><p>Independent developers and readers can suggest projects or corrections. Suggestions receive human editorial review; submitting does not promise publication, endorsement or a response time.</p>
+    <div class="contribution-steps"><h2>Bring the useful bits.</h2><ol><li>Project name and its official website or repository.</li><li>What it helps an ordinary person do, in your own words.</li><li>Your connection to the project, if any.</li><li>Links supporting claims about cost, licences and requirements.</li><li>For corrections: the FRP article URL, the issue and a supporting source.</li></ol></div>
+    <h2>Choose a route.</h2>
+    {community.repository ? <p><a class="frp-cta" href={`${community.repository}/issues/new?template=discovery.yml`}>Suggest a discovery on GitHub ↗</a><br/><a href={`${community.repository}/issues/new?template=correction.yml`}>Report an editorial correction ↗</a></p> : <p class="editorial-notice">GitHub submissions are not open yet. The repository has not been published.</p>}
+    {community.alternative ? <p>No GitHub account? <a href={community.alternative.url}>{community.alternative.label} ↗</a></p> : <p>No GitHub account? An alternative contact option will appear here once the owner approves it. There is no active submission inbox on this site yet.</p>}
+    <p>Keep a note of your suggestion for now if no route is available. GitHub issues are public: do not include passwords, licence keys, personal device reports or other private details. Report security problems through a project's own security instructions rather than posting exploit details here.</p>
+    <p>We prefer original explanations and official links. Do not paste another project's README as an article. There is no automatic publication or payment for placement.</p>
+  </div>
+</EditorialLayout>

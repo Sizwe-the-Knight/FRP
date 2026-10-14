@@ -1,0 +1,33 @@
+---
+import { withBase } from '../../lib/paths';
+import { getCollection, render } from 'astro:content';
+import EditorialLayout from '../../layouts/EditorialLayout.astro';
+import RealityCheck from '../../components/editorial/RealityCheck.astro';
+import { RequirementsList } from '../../components/editorial/RequirementsList';
+import { ShareLink } from '../../components/editorial/ShareLink';
+import { hasPublicBody } from '../../lib/publication';
+export async function getStaticPaths() {
+  return (await getCollection('articles')).filter(entry => entry.data.status !== 'draft').map(entry => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const article = entry.data;
+const visible = hasPublicBody(article);
+const rendered = visible ? await render(entry) : null;
+const Content = rendered?.Content;
+---
+<EditorialLayout title={visible ? article.title : 'Article withdrawn'} description={visible ? article.description : 'This article has been withdrawn.'} noindex={!visible}>
+  {visible ? <article class="article-page">
+    <header class={`article-heading ${article.color}`}><span class="frp-eyebrow">{article.sections.join(' / ')} · {article.kind}</span><h1>{article.title}</h1><p>{article.description}</p><p class="article-byline">By {article.author} · Sources reviewed <time datetime={article.reviewed!}>{article.reviewed}</time></p></header>
+    <div class="article-reading">
+      {article.status === 'archived' && <aside class="editorial-notice"><b>Archived — historical context, not a current recommendation.</b><p>{article.archiveNote}</p></aside>}
+      {article.creator && <p>Project creators: <a href={article.creator.url}>{article.creator.name}</a>. FRP's explanation is independent.</p>}
+      {Content && <div class="prose"><Content /></div>}
+      {article.reality && <RealityCheck answers={article.reality} />}
+      {article.requirements && <section aria-labelledby="requirements-heading"><h2 id="requirements-heading">Will my potato run it?</h2><RequirementsList requirements={article.requirements} sources={article.sources} /><a class="frp-cta" href={withBase(`/setup/#article=${encodeURIComponent(article.slug)}`)}>Compare with my setup ↗</a><p class="small-note">Only the article selection travels with this link. Your device details stay in this page's memory.</p></section>}
+      {article.officialUrl && <section><h2>Go to the source.</h2><ul><li><a href={article.officialUrl}>Official project website</a></li><li><a href={article.repositoryUrl}>Official repository</a></li><li><a href={article.docsUrl}>Official documentation / installation instructions</a></li></ul></section>}
+      {article.githubGuide && <p>New to repositories? <a href={withBase("/articles/github-without-the-jargon/")}>Read FRP's beginner GitHub guide.</a></p>}
+      <section class="article-sources"><h2>Sources & attribution</h2><p>Reviewed source material, not hands-on benchmark testing. Requirements may change; confirm with the project before installing.</p><ol>{article.sources.map(s => <li id={`source-${s.id}`}><a href={s.url}>{s.title}</a> — checked {s.checked}</li>)}</ol></section>
+      <ShareLink client:load /><p><a href={withBase("/contribute/")}>Spotted an error? Suggest a correction ↗</a></p>
+    </div>
+  </article> : <section class="article-reading"><h1>Article withdrawn.</h1><p>This entry is no longer available. It is excluded from FRP discovery and recommendations.</p><a href={withBase("/explore/")}>Back to The Current ↗</a></section>}
+</EditorialLayout>

@@ -1,0 +1,21 @@
+---
+import '../styles/magicpath-global.css';
+import '../styles/fonts.css';
+interface Props { title?: string; description?: string; noindex?: boolean; }
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const { title = 'FRP — Free-Range Picks', description = "The cool stuff you saw online, explained for the rest of us. Discover independent tools, open-source projects, and what's actually worth trying.", noindex = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    {canonical && !noindex && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex" />}
+    <title>{title}</title>
+  </head>
+  <body><div id="root"><slot /></div></body>
+</html>

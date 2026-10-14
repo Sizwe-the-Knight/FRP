@@ -1,0 +1,9 @@
+---
+import { withBase } from '../../lib/paths';
+import { community } from '../../config/community';
+---
+<h2>Contact and corrections</h2>
+{community.alternative
+  ? <p>For editorial corrections or privacy questions, use <a href={community.alternative.url}>{community.alternative.label}</a>. Share only information needed to explain your request.</p>
+  : <p>A direct contact route has not been configured for this beta. Once available, it will appear here and on our <a href={withBase("/contribute/")}>contributions page</a>. There is currently no private contact inbox operated by this website.</p>}
+{community.repository && <p>Non-sensitive editorial corrections can also be <a href={`${community.repository}/issues/new?template=correction.yml`}>submitted on GitHub</a>. Issues are public; do not post private information.</p>}

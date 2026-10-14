@@ -1,0 +1,30 @@
+node_modules/
+dist/
+.astro/
+.npm-cache/
+.local/
+.env
+.env.*
+# Private reference material pending licensing review. Never deploy these folders.
+reference/
+FRP reference design/
+# Keep private editorial work outside the collection loader.
+drafts/
+private/
+*.log
+*.tmp
+*.pem
+*.key
+*.p12
+*.pfx
+.DS_Store
+Thumbs.db
+*.code-workspace
+# Initial source publication allowlist: website draft exclusion is not Git privacy.
+/src/content/articles/**
+!/src/content/articles/coqui-tts-voices-with-a-learning-curve.md
+!/src/content/articles/free-download-real-costs.md
+!/src/content/articles/github-without-the-jargon.md
+!/src/content/articles/ollama-local-ai-starting-point.md
+!/src/content/articles/shotcut-a-free-video-editor.md
+!/src/content/articles/wan21-ai-video-is-not-a-small-download.md

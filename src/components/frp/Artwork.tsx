@@ -1,0 +1,25 @@
+import { useId } from 'react';
+export function Star({
+  className = ''
+}: {
+  className?: string;
+}) {
+  return <svg viewBox="0 0 120 120" aria-hidden="true" className={className}><path d="M60 0L70 39 102 10 83 48 120 60 81 70 110 104 72 82 60 120 49 81 15 110 37 71 0 60 39 49 10 15 48 37Z" fill="currentColor" /></svg>;
+}
+export function TechArt({
+  small = false
+}: {
+  small?: boolean;
+}) {
+  return <svg className={small ? 'tech-svg small' : 'tech-svg'} viewBox="0 0 640 490" role="img" aria-label="Original illustrated computer, neon browser windows, cables and chrome arrows"><defs><linearGradient id={small ? 'metal-s' : 'metal'} x1="0" x2=".9" y2="1"><stop stopColor="#ffffff" /><stop offset=".25" stopColor="#b5b5d0" /><stop offset=".44" stopColor="#faffff" /><stop offset=".5" stopColor="#53567a" /><stop offset=".76" stopColor="#dddffe" /><stop offset="1" stopColor="#8986a4" /></linearGradient><pattern id={small ? 'checker-s' : 'checker'} width="32" height="32" patternUnits="userSpaceOnUse"><rect width="32" height="32" fill="#11111d" /><path d="M0 0H16V16H0ZM16 16H32V32H16Z" fill="#f5f2e8" /></pattern></defs><g stroke="#11111d" strokeWidth="5" strokeLinejoin="round"><path d="M81 117l348-32 82 248-364 33z" fill="#11111d" /><path d="M97 87l343-23 56 249-348 28z" fill={`url(#${small ? 'metal-s' : 'metal'})`} /><path d="M126 109l287-19 40 196-294 26z" fill="#c7ff28" /><path d="M149 295l336-25-41 37-285 25z" fill="#77799f" /><path d="M275 331l-4 48 81 2-19-50" fill="#eee9f7" /><path d="M242 378l-32 34 179-10-44-21" fill={`url(#${small ? 'metal-s' : 'metal'})`} /><path d="M34 374l245-33 73 91-245 30z" fill="#eaebfa" /><path d="M58 386l207-30 43 59-204 25z" fill="#787996" /><path d="M65 396l203-28M82 413l199-28M102 427l192-27" stroke="#d6d3ef" strokeWidth="8" strokeDasharray="15 5" /><path d="M449 365q80-6 105 39t61 11" fill="none" stroke="#ff6539" strokeWidth="13" /><path d="M510 342q68-22 78 9q5 19-58 37z" fill="#ff68bf" /></g><g transform="rotate(-5 270 200)"><rect x="155" y="133" width="242" height="142" rx="5" fill="#f9f6ee" stroke="#11111d" strokeWidth="4" /><path d="M157 135h238v26H157z" fill="#ff6ab8" stroke="#11111d" strokeWidth="3" /><circle cx="171" cy="148" r="3" /><circle cx="184" cy="148" r="3" /><path d="M194 226l25-36 18 25 30-30 24 35" fill="none" stroke="#2548ff" strokeWidth="11" /><path d="M308 185h63m-63 17h48m-48 17h63m-63 17h39" stroke="#171725" strokeWidth="7" /></g><path d="M430 38l116 35-44 28 44 57-36 26-41-59-36 46z" fill="#ff71c6" stroke="#11111d" strokeWidth="5" /><path d="M14 241l76-40 28 85-33-8-37 50-28-22 37-47z" fill="#ff7438" stroke="#11111d" strokeWidth="5" /><circle cx="507" cy="278" r="64" fill={`url(#${small ? 'checker-s' : 'checker'})`} stroke="#11111d" strokeWidth="5" /><circle cx="507" cy="278" r="34" fill="#ffeb22" stroke="#11111d" strokeWidth="5" /><path d="M491 285l26-25m-21 0h22v22" fill="none" stroke="#11111d" strokeWidth="6" /><g fill="#f5f2e9" stroke="#11111d" strokeWidth="3"><path d="M91 41l6 21 20 4-21 6-6 20-4-20-21-6 21-4z" /><path d="M389 401l9 22 26 8-28 8-8 29-7-29-25-9 27-7z" /></g></svg>;
+}
+export function Graphic({
+  kind = 'flower'
+}: {
+  kind?: string;
+}) {
+  const paintId = 'chrome-' + useId().replaceAll(':', '');
+  return <svg viewBox="0 0 360 250" aria-hidden="true" className="editorial-graphic"><defs><linearGradient id={paintId} x2="0" y2="1"><stop stopColor="#fff" /><stop offset=".35" stopColor="#a1a3ba" /><stop offset=".5" stopColor="#fff" /><stop offset=".56" stopColor="#555575" /><stop offset="1" stopColor="#edeffe" /></linearGradient></defs>{kind === 'flame' ? <><path d="M198 15c24 72-8 67 18 108 8-18 25-23 28-46 52 73 26 152-48 157-94 6-118-60-65-115-9 41 7 46 19 45-28-72 52-90 48-149Z" fill="#fdff3f" stroke="#15151e" strokeWidth="6" /><path d="M195 137c-5 40 20 29 18 60-1 33-62 34-56-2 2-18 23-20 38-58Z" fill="#ff6c38" stroke="#15151e" strokeWidth="5" /></> : kind === 'folder' ? <><path d="M53 74l111-14 30 20 110-12 19 144-242 22z" fill="#ffbaea" stroke="#15151e" strokeWidth="6" /><path d="M72 103l257-23-34 137-214 17z" fill="#c9ff2e" stroke="#15151e" strokeWidth="6" /><path d="M155 129l51 4-11 35 42-7-36 53-9-31-38 1z" fill="#2449ff" stroke="#15151e" strokeWidth="4" /></> : kind === 'evaporated' ? <><ellipse cx="177" cy="207" rx="108" ry="22" fill="#b7b4d9" stroke="#15151e" strokeWidth="5" /><path d="M117 163c-48-36 52-58 9-100M179 153c-48-36 52-58 9-100M241 163c-48-36 52-58 9-100" fill="none" stroke="#fff5db" strokeWidth="24" strokeLinecap="round" /><path d="M119 156c-48-36 52-58 9-100M181 146c-48-36 52-58 9-100M243 156c-48-36 52-58 9-100" fill="none" stroke="#15151e" strokeWidth="4" strokeLinecap="round" /></> : <><g transform="translate(180 125)" fill={`url(#${paintId})`} stroke="#15151e" strokeWidth="5">{Array.from({
+          length: 8
+        }, (_, i) => <ellipse key={i} cx="0" cy="-62" rx="27" ry="55" transform={`rotate(${i * 45})`} />)}<circle r="37" fill="#ffeb27" /><path d="M-15 11L13-15M-7-15h22v22" strokeWidth="7" fill="none" /></g></>}</svg>;
+}

@@ -1,0 +1,26 @@
+---
+import { withBase } from '../lib/paths';
+import EditorialLayout from '../layouts/EditorialLayout.astro';
+import PolicyContact from '../components/editorial/PolicyContact.astro';
+const hostedOnPages = import.meta.env.FRP_HOSTING === 'github-pages';
+---
+<EditorialLayout title="Privacy & credits" description="How FRP's static beta handles information, plus design and font credits.">
+  <div class="article-reading">
+    <h1>Privacy & credits</h1><p>Last updated: <time datetime="2026-10-14">14 October 2026</time></p>
+    <h2>A small site, a small footprint.</h2>
+    <p>FRP is an independent, informational technology-discovery publication. This static beta has no FRP-operated reader accounts, analytics, advertising trackers, cookies or persistent device profiles.</p>
+    <h2>Search and device information</h2>
+    <p>Search and compatibility comparisons run locally in your browser using published article metadata. Search text and manually entered device answers stay in temporary page memory; the application does not send them to FRP or an external AI service, save them in browser storage, or put them in URLs. Reloading or leaving the page clears that application state. Your browser's own history, form-restoration and other features are outside FRP's control.</p>
+    <p>A setup link may carry the selected article's slug in its URL fragment, not your device answers. The copy-link button accesses your clipboard only when you press it.</p>
+    <h2>Site delivery and external websites</h2>
+    <p>The three fonts, styles, scripts and illustrations are served with this website. FRP does not request fonts from Google or embed third-party media or tracking scripts. Delivering site files still involves ordinary connection data, such as IP addresses and request details. The hosting provider may process this information under its own policies. {hostedOnPages ? <>This public beta is hosted on GitHub Pages. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a> for its handling of technical connection data.</> : <>This is a local or preview build; the planned public host is GitHub Pages.</>}</p>
+    <p>Following a project, repository, documentation or contact link takes you to an independent service with its own privacy practices. FRP does not control those services or your browser software.</p>
+    <h2>Contributions</h2>
+    <p>There is no submissions backend on this site. When a public GitHub contribution route is configured, issues and their contents will be public and subject to GitHub's practices. An alternative contact service, when configured, will handle messages under its own practices. Do not submit credentials, private device reports or unnecessary personal information. Contributions require manual editorial review.</p>
+    <PolicyContact />
+    <h2 id="credits">Design and font credits</h2>
+    <p>The visual foundation and inline illustrations come from the owner-approved MagicPath component “FRP — Free-Range Picks / Street-Futurist Zine”, generated as glad-cave-4622, revision 460386748535570433. The original archive and reference screenshots are not public website assets.</p>
+    <p>Typography is self-hosted through Fontsource under the SIL Open Font License 1.1. Full copyright and licence notices: <a href={withBase("/third-party-notices/UnifrakturCook-OFL.txt")}>UnifrakturCook</a>, <a href={withBase("/third-party-notices/Bricolage-Grotesque-OFL.txt")}>Bricolage Grotesque</a> and <a href={withBase("/third-party-notices/DM-Sans-OFL.txt")}>DM Sans</a>.</p>
+    <p>Articles credit project creators and link to their sources. Project trademarks belong to their owners. See our <a href={withBase("/terms/")}>Terms of Use</a> for editorial limitations and contribution expectations.</p>
+  </div>
+</EditorialLayout>

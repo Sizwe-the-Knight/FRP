@@ -1,0 +1,9 @@
+---
+import type { ArticleData } from '../../lib/editorial-schema';
+const { answers } = Astro.props as { answers: NonNullable<ArticleData['reality']> };
+const questions = [['does', 'What does it actually do?'], ['free', 'Is it genuinely free?'], ['device', 'Will it work on my device?'], ['difficulty', 'How difficult is it?'], ['catch', "What's the catch?"]] as const;
+---
+<section class="article-reality" aria-labelledby="reality-heading">
+  <span class="frp-eyebrow">CURIOUS, NOT GULLIBLE.</span><h2 id="reality-heading">Reality <em>Check.</em></h2>
+  {questions.map(([key, question], index) => <details open={index === 0}><summary><span>0{index + 1}</span> {question}</summary><p>{answers[key]}</p></details>)}
+</section>

@@ -1,0 +1,25 @@
+name: Suggest a correction
+description: Help FRP fix a factual error or outdated information.
+title: "[Correction] "
+body:
+  - type: markdown
+    attributes:
+      value: "Issues are public. Do not share passwords, device reports or other private data."
+  - type: input
+    id: article
+    attributes:
+      label: FRP article URL
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: What should change, and why?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting official sources
+    validations:
+      required: true

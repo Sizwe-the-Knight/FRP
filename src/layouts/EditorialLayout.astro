@@ -1,0 +1,17 @@
+---
+import { withBase } from '../lib/paths';
+import SiteLayout from './SiteLayout.astro';
+import '../components/frp/frp.css';
+import '../components/frp/frp-refinements.css';
+import '../styles/editorial.css';
+const { title, description, noindex = false } = Astro.props;
+---
+<SiteLayout title={`${title} — FRP`} description={description} noindex={noindex}>
+  <div class="frp editorial-shell still">
+    <a class="frp-skip" href="#editorial-main">Skip to content</a>
+    <div class="frp-topline"><span>INDEPENDENT PICKS. EXPLAINED FOR EVERYONE.</span><a href={withBase("/contribute/")}>Get featured ↗</a></div>
+    <header class="editorial-nav"><a class="frp-logo" href={withBase("/")} aria-label="FRP home">frp</a><nav aria-label="Main navigation"><a href={withBase("/explore/")}>Explore</a><a href={withBase("/#finder")}>Find My Way</a><a href={withBase("/setup/")}>Know My Setup</a></nav></header>
+    <main id="editorial-main"><slot /></main>
+    <footer class="editorial-footer"><a href={withBase("/")}>FRP — There's another way to do that.</a><a href={withBase("/articles/github-without-the-jargon/")}>Beginner GitHub guide</a><a href={withBase("/contribute/")}>Suggest a discovery or correction</a><a href={withBase("/privacy/")}>Privacy & credits</a><a href={withBase("/terms/")}>Terms of Use</a></footer>
+  </div>
+</SiteLayout>

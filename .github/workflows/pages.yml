@@ -1,0 +1,54 @@
+name: FRP Pages
+
+# Manual only. Creating/pushing the repository never deploys automatically.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main' && vars.FRP_PAGES_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    env:
+      ASTRO_TELEMETRY_DISABLED: '1'
+      FRP_SITE: ${{ vars.FRP_SITE }}
+      FRP_BASE: ${{ vars.FRP_BASE }}
+      FRP_HOSTING: github-pages
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.21.0'
+          cache: npm
+      - name: Require explicit destination
+        run: test -n "$FRP_SITE" && test -n "$FRP_BASE"
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      # This existing check builds fixtures, removes them, then builds clean dist/.
+      - run: npm run test:publication
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy verified static artifact
+        id: deployment
+        uses: actions/deploy-pages@v5

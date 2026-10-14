@@ -1,0 +1,15 @@
+---
+import { withBase } from '../lib/paths';
+import EditorialLayout from '../layouts/EditorialLayout.astro';
+import { ArticleCard } from '../components/editorial/ArticleCard';
+import { articleCards } from '../lib/articles';
+import { sections } from '../lib/editorial-schema';
+const articles = await articleCards();
+const sectionId=(name:string)=>name.toLowerCase().replaceAll(' ','-');
+---
+<EditorialLayout title="The Current" description="FRP's manually curated technology discoveries, opinions and beginner guides.">
+  <header class="magazine-heading"><span class="frp-eyebrow">01 / EXPLORE · CURATED BY PEOPLE</span><h1>The <em>Current.</em></h1><p>Good finds, explained. Small starting points for a bigger internet.</p><p class="small-note">Editorial selections, not live trends or popularity rankings.</p></header>
+  <nav class="section-links" aria-label="Editorial sections">{sections.map(name=><a href={`#${sectionId(name)}`}>{name}</a>)}<a href="#archive">Article archive</a></nav>
+  {sections.map(name=>{const entries=articles.filter(a=>a.status==='published' && a.sections.includes(name)); return <section class="magazine-section" id={sectionId(name)}><h2>{name}</h2>{entries.length ? <div class="magazine-grid">{entries.map((article,index)=><ArticleCard article={article} index={index}/>)}</div> : <p class="editorial-notice">Nothing published here yet. This shelf is curated by people; we won't fill it with invented trends. <a href={withBase("/contribute/")}>Suggest a discovery ↗</a></p>}</section>})}
+  <section class="magazine-section" id="archive"><h2>Article archive</h2><p>Historical reading, excluded from discovery results.</p><div class="magazine-grid">{articles.filter(a=>a.status==='archived').map(article=><ArticleCard article={article}/>)}</div>{!articles.some(a=>a.status==='archived') && <p>No archived articles yet.</p>}</section>
+</EditorialLayout>

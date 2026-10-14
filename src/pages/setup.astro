@@ -1,0 +1,24 @@
+---
+import EditorialLayout from '../layouts/EditorialLayout.astro';
+import { TechArt } from '../components/frp/Artwork';
+import { SetupCompare } from '../components/editorial/SetupCompare';
+import { articleCards } from '../lib/articles';
+const articles=(await articleCards()).filter(a=>a.kind==='software' && a.requirements);
+---
+<EditorialLayout title="Will my potato run it?" description="A beginner's equipment guide and cautious comparison with documented article requirements.">
+  <section class="equipment-heading frp-setup"><div class="setup-preview"><span class="frp-eyebrow">03 / KNOW MY SETUP</span><h1>Will my potato <em>run it?</em></h1><p>You don't need to know your specs yet. Start with the labels, then compare what you can find.</p><a class="frp-cta" href="#compare-heading">Already have an article? Compare ↘</a></div><div class="setup-visual"><span class="setup-badge">NO TECH<br/>DEGREE<br/>REQUIRED.</span><TechArt small/><span class="setup-annotation">LITTLE DETAILS. BETTER DECISIONS.</span></div></section>
+  <section class="equipment-basics magazine-section" aria-labelledby="basics-heading"><h2 id="basics-heading">Meet the bits.</h2><div class="equipment-grid">
+    <div class="equipment-note pink"><span aria-hidden="true">▣</span><h3>Operating system</h3><p>The software running the computer: Windows, macOS or a Linux distribution. Version matters too. A Windows download is not automatically a Mac app.</p></div>
+    <div class="equipment-note lime"><span aria-hidden="true">⌘</span><h3>Processor / CPU</h3><p>The chip doing general work. Its name, generation, cores and architecture matter. x64 and ARM64 describe different processor families; “64-bit” alone does not distinguish them.</p></div>
+    <div class="equipment-note orange"><span aria-hidden="true">▥</span><h3>Memory / RAM</h3><p>Working space while apps run. It is different from storage. A requirement of 8 GB RAM does not mean an 8 GB download. Other running apps also use it.</p></div>
+    <div class="equipment-note purple"><span aria-hidden="true">✳</span><h3>Graphics / GPU</h3><p>A chip used for graphics and some AI workloads. Dedicated video memory (VRAM) is not interchangeable with shared system RAM. Drivers and supported features matter, not just a big number.</p></div>
+    <div class="equipment-note lime"><span aria-hidden="true">▰</span><h3>Storage</h3><p>Space for apps, files and downloaded models. Compare free space, not the drive's total capacity. Leave room for your operating system and project files too.</p></div>
+  </div></section>
+  <section class="article-reading equipment-help"><h2>Where do I find this?</h2>
+    <details open><summary>Windows</summary><p>Open Settings → System → About for processor, installed RAM, system type and Windows version. Search Start for “System Information” for more detail. Storage settings show drive usage. Task Manager's Performance area can show GPU information where supported; don't confuse shared memory with dedicated VRAM.</p><p><a href="https://support.microsoft.com/en-us/windows/experience/find-information-about-your-windows-device">Microsoft's device-information guide ↗</a></p></details>
+    <details><summary>macOS</summary><p>Open Apple menu → System Settings → General → About. Look for chip/processor and memory, then System Report for hardware details. Storage settings show available space. Apple silicon uses unified memory; do not enter that whole amount as dedicated GPU memory.</p><p><a href="https://support.apple.com/guide/system-information/welcome/mac">Apple's System Information guide ↗</a></p></details>
+    <details><summary>Linux or something unfamiliar</summary><p>Look for About or System Information in your desktop's Settings. Labels vary by distribution. Use its official help for hardware details, or leave the fields blank. You do not need to upload a system report.</p></details>
+    <p class="small-note">Menu labels vary by version. These are general explanations, not instructions to upgrade or replace hardware. Do not share serial numbers or full system reports in public suggestions.</p>
+  </section>
+  <SetupCompare articles={articles} client:load/>
+</EditorialLayout>

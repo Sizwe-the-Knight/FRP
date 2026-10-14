@@ -1,0 +1,23 @@
+---
+import { withBase } from '../lib/paths';
+import EditorialLayout from '../layouts/EditorialLayout.astro';
+import PolicyContact from '../components/editorial/PolicyContact.astro';
+---
+<EditorialLayout title="Terms of Use" description="A few clear expectations for reading and contributing to FRP.">
+  <div class="article-reading">
+    <h1>Terms of Use</h1><p>Last updated: <time datetime="2026-10-14">14 October 2026</time></p>
+    <h2>Independent information, with limits</h2>
+    <p>FRP is a free, independent technology-discovery publication. Our articles provide editorial and educational information. Specifications, prices, licences and project availability can change after an article is reviewed.</p>
+    <p>Compatibility comparisons are informational estimates based on documented requirements and the details you enter, not guarantees. Missing information, drivers and other limitations can affect results. Check official project documentation before downloading, installing or relying on software, and download only from sources you trust.</p>
+    <h2>Third-party projects</h2>
+    <p>Featured software is provided by its respective creator or distributor under its own terms. A mention or link does not mean FRP has tested its safety or is officially affiliated with or endorsed by that project, unless expressly stated.</p>
+    <h2>Respect the work</h2>
+    <p>Sharing links to FRP is welcome. Reproducing FRP's editorial content or artwork requires applicable permission, a relevant licence or a use permitted by law. Third-party materials, fonts and trademarks retain their respective rights and licences; see our <a href={withBase("/privacy/#credits")}>credits and font notices</a>.</p>
+    <h2>Community contributions</h2>
+    <p>Suggestions and corrections receive manual editorial review and are not automatically published. Submit your own explanations and supporting links. Do not include private information, credentials or material that infringes someone else's rights. Public GitHub issues, when available, are visible to others.</p>
+    <h2>Using your judgment</h2>
+    <p>We aim to explain discoveries accurately but cannot promise that every detail is complete, current or suitable for your circumstances. FRP does not control third-party software or websites. Consider the risks before acting on an article. These terms do not exclude responsibilities or rights that cannot lawfully be excluded.</p>
+    <PolicyContact />
+    <p>Our <a href={withBase("/privacy/")}>Privacy Policy</a> explains how this static website handles information.</p>
+  </div>
+</EditorialLayout>

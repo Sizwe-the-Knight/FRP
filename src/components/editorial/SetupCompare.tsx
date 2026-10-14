@@ -1,0 +1,23 @@
+import { useEffect, useState } from 'react';
+import type { ArticleCard } from '../../lib/editorial-schema';
+import { compareRequirements, emptyDevice, type Device } from '../../lib/compatibility';
+import { RequirementsList } from './RequirementsList';
+export function SetupCompare({ articles }: { articles: ArticleCard[] }) {
+  const [selected,setSelected]=useState('');const [contextNotice,setContextNotice]=useState('');
+  const [device,setDevice]=useState<Device>({...emptyDevice});const [show,setShow]=useState(false);
+  useEffect(()=>{const read=()=>{const slug=new URLSearchParams(location.hash.slice(1)).get('article');if(!slug)return;const match=articles.find(a=>a.slug===slug);setSelected(match?.slug??'');setContextNotice(match?'':'That article is unavailable for comparison. Choose a published article below.');setShow(false);};read();window.addEventListener('hashchange',read);return()=>window.removeEventListener('hashchange',read);},[articles]);
+  const article=articles.find(a=>a.slug===selected);const requirements=article?.requirements;
+  const update=(key:keyof Device,value:string)=>{setDevice({...device,[key]:value});setShow(false);};
+  const findings=requirements?compareRequirements(requirements,device):[];
+  return <section className="setup-comparison" aria-labelledby="compare-heading"><span className="frp-eyebrow">OPTIONAL / YOUR DEVICE, YOUR PACE</span><h2 id="compare-heading">Let's compare the known bits.</h2><p>No automatic device scan. Leave anything you don't know blank. These answers stay in page memory; FRP does not save or submit them.</p>
+    {contextNotice && <p role="status">{contextNotice}</p>}
+    <label className="article-picker">Article to compare<select value={selected} onChange={e=>{setSelected(e.target.value);setShow(false);setContextNotice('');}}><option value="">Choose an article, or just read the guide</option>{articles.map(a=><option key={a.id} value={a.slug}>{a.title}{a.status==='archived'?' (archived)':''}</option>)}</select></label>
+    {article && requirements && <div className="selected-requirements"><h3>{article.title}</h3>{article.status==='archived'&&<p className="editorial-notice">Archived requirements: historical context, not a current recommendation.</p>}<a href={article.href}>Back to the article ↗</a><RequirementsList requirements={requirements} sources={article.sources}/></div>}
+    <form autoComplete="off" onSubmit={e=>{e.preventDefault();setShow(true);}}><fieldset><legend>What can you find? All fields are optional.</legend><div className="device-fields">
+      <label>Operating system<select value={device.os} onChange={e=>update('os',e.target.value)}><option value="">Not sure</option>{['Windows','macOS','Linux','Other'].map(v=><option key={v}>{v}</option>)}</select></label>
+      <label>Architecture<select value={device.architecture} onChange={e=>update('architecture',e.target.value)}><option value="">Not sure</option><option value="x64">x64 / x86-64 (Intel or AMD)</option><option value="arm64">ARM64 (for example Apple silicon)</option><option value="x86">32-bit x86</option></select></label>
+      {([['version','OS version','text'],['cpu','Processor / CPU name (note only)','text'],['ram','RAM in GB','number'],['storage','Free storage in GB','number'],['gpu','Graphics / GPU name (note only)','text'],['vram','Dedicated GPU memory in GB (not shared RAM)','number']] as const).map(([key,label,type])=><label key={key}>{label}<input type={type} min={type==='number'?0:undefined} max={type==='number'?1000000:undefined} step={type==='number'?'any':undefined} maxLength={type==='text'?100:undefined} value={device[key]} onChange={e=>update(key,e.target.value)} /></label>)}
+    </div></fieldset><div className="setup-actions"><button className="frp-cta" disabled={!requirements}>Compare documented requirements ↗</button><button type="button" onClick={()=>{setDevice({...emptyDevice});setShow(false);}}>Clear my answers</button></div>{!requirements && <p>Choose an article above to enable comparison.</p>}</form>
+    <div aria-live="polite">{show && requirements && <div className="comparison-result"><h3>{findings.some(f=>f.status==='mismatch')?'A documented requirement needs attention.':'Compatibility is still unverified.'}</h3><p>This checks a few documented facts, not whether installation will succeed. Read the scope, unknowns and official instructions before deciding.</p><ul>{findings.map(f=><li key={f.label}><b>{f.label} — {f.status==='checked'?'limited check passed':f.status==='mismatch'?'possible mismatch':'not established'}</b><p>{f.detail}</p></li>)}</ul><a href={article!.docsUrl}>Check the project's official instructions ↗</a></div>}</div>
+  </section>;
+}

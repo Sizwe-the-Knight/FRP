@@ -1,0 +1,9 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { FRPFreeRangePicksStreetFuturistZine } from '../components/frp/FRPFreeRangePicksStreetFuturistZine';
+import { articleCards } from '../lib/articles';
+const articles = await articleCards();
+---
+<SiteLayout>
+  <FRPFreeRangePicksStreetFuturistZine articles={articles.filter(article => article.status === 'published')} client:load />
+</SiteLayout>

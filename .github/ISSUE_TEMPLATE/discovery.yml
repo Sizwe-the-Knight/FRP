@@ -1,0 +1,32 @@
+name: Suggest a discovery
+description: Put an independent project on FRP's editorial radar.
+title: "[Discovery] "
+body:
+  - type: markdown
+    attributes:
+      value: "Human editorial review only. Issues are public. Do not include private information."
+  - type: input
+    id: project
+    attributes:
+      label: Project name and official URL
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: What does it help an ordinary person do?
+    validations:
+      required: true
+  - type: input
+    id: connection
+    attributes:
+      label: Your connection to the project
+      description: Creator, contributor, user, or no affiliation.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Official sources for cost, licence, requirements and limitations
+    validations:
+      required: true
